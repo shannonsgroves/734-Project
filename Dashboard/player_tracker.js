@@ -61,11 +61,15 @@ function animate() {
 d3.csv(file_name).then(function(dataset) {
     trackingData = dataset;
     // update way to recieve play
-    var playID = 35;
-    var gameID = 2018121603;
+    // var playID = 35;
+    // var gameID = 2018121603;
+    // currentPlay = loadPlay(gameID, playID);
+});
+
+function uploadPlayToField(playID, gameID) {
     currentPlay = loadPlay(gameID, playID);
     updateField(times[currentTime]);
-});
+}
 
 function loadPlay(gameID, playID) {
     times = [];
