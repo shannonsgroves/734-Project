@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Field Tracker</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div id="main">
+        <svg width="1000" height="500" style="border: 1px solid #777;">
+        </svg>
+        <button onclick="onRunPlay()">RunPlay</button>
+        <div class="slidecontainer">
+			<input type="range" min="0" max="100" value="0" class="slider" id="myRange"> <!-- onChange="onSliderChanged()">
+ -->		</div>
+    </div>
+</body>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="./player_tracker.js"></script>
+</html>

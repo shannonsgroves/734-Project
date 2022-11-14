@@ -1,0 +1,56 @@
+.player {
+
+}
+
+.player-label {
+  fill: #ccc;
+  font-size: 11px;
+}
+
+.player circle {
+  fill-opacity: 1.0;
+  border: 8px solid #f84342;
+  stroke: #fff;
+  stroke-width: 0.5;
+  stroke-opacity: 0.6;
+  z-index: 3;
+}
+
+.player text {
+    /*opacity: 1;*/
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.player .number {
+    /*opacity: 1;*/
+    font-size: 10px;
+    font-weight: bold;
+    z-index: 2;
+}
+
+
+/* .axis text {
+    fill: #ccc;
+}
+
+.axis path,
+.axis line {
+    stroke: #ccc;
+}
+
+.axisLabel {
+    fill: #ccc;
+    font-size: 11px;
+    text-anchor: middle;
+} */
+
+/*body {
+  font-family: "Open Sans";
+  margin: 0;
+  background-color: #000;
+}*/
+
+#main {
+  margin: 0;
+}
