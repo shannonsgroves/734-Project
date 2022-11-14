@@ -30,11 +30,17 @@ function dataPreprocessor(row) {
         'gameId': row['gameId'],
         'playId': row['playId'],
         'playDescription': row['playDescription'].toLowerCase(),
-        'possessionTeam': row['possessionTeam']
+        'possessionTeam': row['possessionTeam'],
+        'quarter': row['quarter'],
+        'gameClock': row['gameClock']
     };
 }
 
-var container = d3.select('body').append('div').attr('id', 'container');;
+d3.select('#main').append('g')
+    .append('text')
+    .text('Game ID' + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + 'Play ID' + '\xa0\xa0\xa0\xa0\xa0' + 'Team Name' + '\xa0\xa0\xa0\xa0\xa0' + 'Quarter' + '\xa0\xa0\xa0\xa0\xa0' + 'Time');
+
+var container = d3.select('#main').append('div').attr('id', 'container');;
 var curr_state = {
     'year': [],
     'event': [],
@@ -42,7 +48,7 @@ var curr_state = {
 }
 
 var viewbox = container.append('svg')
-    .attr('viewBox', '0,0,400,2000');
+    .attr('viewBox', '0,0,600,2000');
 
 d3.csv('plays.csv', dataPreprocessor).then(function(dataset) {
     plays_data = dataset;
@@ -57,7 +63,7 @@ function updateChart() {
 
     if (curr_state['year'].length != 0) {
         var filtered_plays = plays_data.filter(function(d){
-            return curr_state['year'].some(el => d.gameId.includes(el));
+            return curr_state['year'].some(el => d.gameId.substring(0,4) == el);
         });
     } else {
         filtered_plays = plays_data
@@ -84,7 +90,7 @@ function updateChart() {
     rect_height = filtered_plays.length * 20
     
     viewbox.append('rect')
-        .attr('width', 400)
+        .attr('width', 600)
         .attr('height', rect_height)
         .attr('fill', 'white')
         .attr('x', 0)
@@ -102,5 +108,9 @@ function updateChart() {
         .attr('x', 0)
         .attr('y', function (d, i) { return i * 2 * 20 })
         .attr('fill', 'black')
-        .text(function (d, i) { return d.gameId});
+        .text(function (d, i) { return d.gameId + '\xa0\xa0\xa0\xa0\xa0' + d.playId + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.possessionTeam + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.quarter + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.gameClock});
 }
+
+function myFunction() {
+    alert ("Hello World!");
+  }
