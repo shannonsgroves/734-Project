@@ -44,9 +44,19 @@
             </select>
         </div>
         <br><br>
+        <form id="DataSelection">
+            <input type="button" value="Season of 2018" id="Season-select" onclick="selectYear2018()"/>
+            <input type="button" value="Season of 2019" id="Season-select" onclick="selectYear2019()"/>
+            <input type="button" value="Season of 2020" id="Season-select" onclick="selectYear2020()"/>
+        </form>
+        <br><br>
         <form id="PlayerId">
             <input type="text" name="PlayerId" id="PlayerId-field" class="PlayerId-field" placeholder="Specific nflId or All"/>
-            <input type="button" value="Show" id="PlayerId-submit" onclick="updateChartData()"/>
+            <input type="button" value="Select" id="PlayerId-submit" onclick="updateChartData()"/>
+        </form>
+        <br><br>
+        <form id="Show">
+            <input type="button" value="Show" id="Show-Data" onclick="updateChart()"/>
         </form>
     </div>
 </body>

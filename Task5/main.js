@@ -48,27 +48,98 @@ var xAxisG = chartG.append('g')
 var yAxisG = chartG.append('g')
     .attr('class', 'y axis');
 
-d3.csv('cleaned_tracking2019_withweather.csv', dataPreprocessor).then(function(dataset) {
-    // **** Your JavaScript code goes here ****
-    tracking = dataset;
-    specific_tracking = tracking;
-
-    xScale = d3.scaleLinear()
-        .range([0, chartWidth]);
-    yScale = d3.scaleLinear()
-        .range([chartHeight, 0]);
+function selectYear2018() {
+    d3.csv('cleaned_tracking2018_withweather.csv', dataPreprocessor).then(function(dataset) {
+        // **** Your JavaScript code goes here ****
+        tracking = dataset;
+        specific_tracking = tracking;
     
-    domainMap = {};
-
-    dataset.columns.forEach(function(column) {
-        domainMap[column] = d3.extent(dataset, function(data_element) {
-            return data_element[column];
+        xScale = d3.scaleLinear()
+            .range([0, chartWidth]);
+        yScale = d3.scaleLinear()
+            .range([chartHeight, 0]);
+        
+        domainMap = {};
+    
+        dataset.columns.forEach(function(column) {
+            domainMap[column] = d3.extent(dataset, function(data_element) {
+                return data_element[column];
+            });
         });
+        // Create global object called chartScales to keep state
+        chartScales = {x: "Temperature", y: "speed"};
+        // updateChart();
     });
-    // Create global object called chartScales to keep state
-    chartScales = {x: "Temperature", y: "speed"};
-    updateChart();
-});
+}
+
+function selectYear2019() {
+    d3.csv('cleaned_tracking2019_withweather.csv', dataPreprocessor).then(function(dataset) {
+        // **** Your JavaScript code goes here ****
+        tracking = dataset;
+        specific_tracking = tracking;
+    
+        xScale = d3.scaleLinear()
+            .range([0, chartWidth]);
+        yScale = d3.scaleLinear()
+            .range([chartHeight, 0]);
+        
+        domainMap = {};
+    
+        dataset.columns.forEach(function(column) {
+            domainMap[column] = d3.extent(dataset, function(data_element) {
+                return data_element[column];
+            });
+        });
+        // Create global object called chartScales to keep state
+        chartScales = {x: "Temperature", y: "speed"};
+        // updateChart();
+    });
+} 
+
+function selectYear2020() {
+    d3.csv('cleaned_tracking2020_withweather.csv', dataPreprocessor).then(function(dataset) {
+        // **** Your JavaScript code goes here ****
+        tracking = dataset;
+        specific_tracking = tracking;
+    
+        xScale = d3.scaleLinear()
+            .range([0, chartWidth]);
+        yScale = d3.scaleLinear()
+            .range([chartHeight, 0]);
+        
+        domainMap = {};
+    
+        dataset.columns.forEach(function(column) {
+            domainMap[column] = d3.extent(dataset, function(data_element) {
+                return data_element[column];
+            });
+        });
+        // Create global object called chartScales to keep state
+        chartScales = {x: "Temperature", y: "speed"};
+        // updateChart();
+    });
+}
+// d3.csv('cleaned_tracking2019_withweather.csv', dataPreprocessor).then(function(dataset) {
+//     // **** Your JavaScript code goes here ****
+//     tracking = dataset;
+//     specific_tracking = tracking;
+
+//     xScale = d3.scaleLinear()
+//         .range([0, chartWidth]);
+//     yScale = d3.scaleLinear()
+//         .range([chartHeight, 0]);
+    
+//     domainMap = {};
+
+//     dataset.columns.forEach(function(column) {
+//         domainMap[column] = d3.extent(dataset, function(data_element) {
+//             return data_element[column];
+//         });
+//     });
+//     // Create global object called chartScales to keep state
+//     chartScales = {x: "Temperature", y: "speed"};
+//     updateChart();
+// });
 
 
 function updateChart() {
@@ -84,7 +155,7 @@ function updateChart() {
         .duration(750)
         .call(d3.axisLeft(yScale));
     
-    var dots = chartG.selectAll('.dot').remove().data(specific_tracking);
+    var dots = chartG.selectAll('.dot').data(specific_tracking);
 
     var dotsEnter = dots.enter()
         .append('g')
@@ -96,7 +167,7 @@ function updateChart() {
     dotsEnter.append('text')
         .attr('y', -10)
         .text(function(d) {
-            return d.name;
+            return d.gameId;
         });
 
     dots.merge(dotsEnter)
@@ -107,6 +178,7 @@ function updateChart() {
             var ty = yScale(d[chartScales.y]);
             return 'translate('+[tx, ty]+')';
         });
+
     
 }
 
@@ -132,6 +204,6 @@ function updateChartData() {
     }
 
     console.log(specific_tracking);
-    updateChart();
+    // updateChart();
 }
 // Remember code outside of the data callback function will run before the data loads
