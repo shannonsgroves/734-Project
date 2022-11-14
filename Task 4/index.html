@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Task 4</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div style="position: absolute; top: 130px; width: 170px">
+        <div><label>Choose performance metric  </label></div>
+        <select class="categorySelect" id="yScaleSelect" onchange="onYScaleChanged()">
+          <option value="Total Distance">Total Distance</option>
+          <option value="Average Speed">Average Speed</option>
+        </select>
+        <div>
+            <label> Enter top number of players: </label>
+        </div>
+        <input type="text" id="numberPlayers">
+        <button type="button" id="playerButton" onclick="onButtonPressed()">Enter</button>
+    </div>
+    <div style="margin-left: 160px;">
+        <svg width="960" height="1000" style="border: 1px solid #777;">
+        </svg>
+    </div>
+</body>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="https://d3js.org/d3-array.v2.min.js"></script>
+<script src="./main.js"></script>
+
+</html>
