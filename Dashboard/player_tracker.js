@@ -40,6 +40,8 @@ slider.oninput = function() {
 };
 
 isClicked = false;
+times = [];
+
 function onRunPlay() {
     isClicked = !isClicked;
     animate();
