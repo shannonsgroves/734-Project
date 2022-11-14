@@ -36,11 +36,11 @@ function dataPreprocessor(row) {
     };
 }
 
-d3.select('#main').append('g')
+d3.select('#block_container').append('g')
     .append('text')
     .text('Game ID' + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + 'Play ID' + '\xa0\xa0\xa0\xa0\xa0' + 'Team Name' + '\xa0\xa0\xa0\xa0\xa0' + 'Quarter' + '\xa0\xa0\xa0\xa0\xa0' + 'Time');
 
-var container = d3.select('#main').append('div').attr('id', 'container');;
+var container = d3.select('#block_container').append('div').attr('id', 'container').attr('width', 600);
 var curr_state = {
     'year': [],
     'event': [],

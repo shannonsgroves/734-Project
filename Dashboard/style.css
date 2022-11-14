@@ -18,4 +18,14 @@ div#container {
     width: 400px;
     border:2px solid #000;
     overflow: scroll;
+    float: left;
+}
+
+#block_container
+{
+    text-align:center;
+}
+#main2
+{
+    float: right;
 }

@@ -75,14 +75,23 @@
               <option value="WA">Washington Commanders </option>
             </select>
         </div>    
+        <div>
+            <label for="fname">Game ID:</label>
+            <input type="text" id="fname" name="fname"><br><br>
+            <label for="lname">Play ID:</label>
+            <input type="text" id="lname" name="lname"><br><br>
+            <button onclick="uploadPlayToField(35, 2018121603)">RunPlay</button>
+        </div>
     </div>
-    <div id="main2">
-        <svg id="field" width="1000" height="500" style="border: 1px solid #777;">
-        </svg>
-        <button onclick="onRunPlay()">RunPlay</button>
-        <div class="slidecontainer">
-      <input type="range" min="0" max="100" value="0" class="slider" id="myRange"> <!-- onChange="onSliderChanged()">
- -->    </div>
+    <div id="block_container">
+        <div id="main2">
+            <svg id="field" width="1000" height="500" style="border: 1px solid #777;">
+            </svg>
+            <button onclick="onRunPlay()">RunPlay</button>
+            <div class="slidecontainer">
+                <input type="range" min="0" max="100" value="0" class="slider" id="myRange"> <!-- onChange="onSliderChanged()">
+    -->    </div>
+    </div>
     </div>
 
 </body>

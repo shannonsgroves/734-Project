@@ -71,6 +71,7 @@ d3.csv(file_name).then(function(dataset) {
 function uploadPlayToField(playID, gameID) {
     currentPlay = loadPlay(gameID, playID);
     updateField(times[currentTime]);
+    return currentPlay
 }
 
 function loadPlay(gameID, playID) {
