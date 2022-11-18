@@ -16,16 +16,52 @@ body {
 div#container {
     height: 600px;
     width: 400px;
-    border:2px solid #000;
+    border: 2px solid #000;
     overflow: scroll;
     float: left;
 }
 
-#block_container
-{
-    text-align:center;
+#block_container {
+    text-align: center;
 }
-#main2
-{
+
+#main2 {
     float: right;
+}
+
+button {
+    margin-left: 50px;
+    margin-top: 10px
+}
+
+text,
+label {
+    font: 15px sans-serif;
+    text-anchor: middle;
+}
+
+div {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.arc:hover {
+    fill: orange;
+}
+
+rect:hover {
+    fill: orange;
+}
+
+.tooltip {
+    padding: 10px;
+    background: white;
+    border-radius: 4px;
+    border: solid;
+    border-width: 1px;
+    font: 15px sans-serif;
+}
+
+h {
+    font: 20px sans-serif;
 }

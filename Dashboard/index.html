@@ -1,11 +1,13 @@
 <!DOCTYPE HTML>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Final Project</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
     <div id="main">
         <div>
@@ -17,7 +19,7 @@
                 2019
                 <input type="checkbox" id="year_2020" onclick="update_year('2020')">
                 2020
-            </label>  
+            </label>
         </div>
         <div>
             <label class="event">
@@ -34,7 +36,7 @@
                 Punt
                 <input type="checkbox" id="event_injure" onclick="update_event('injure')">
                 Injury
-            </label>  
+            </label>
         </div>
         <div>
             <label for="team_name">Team Name: </label>
@@ -74,7 +76,7 @@
               <option value="TEN">Tennessee Titans </option>
               <option value="WA">Washington Commanders </option>
             </select>
-        </div>    
+        </div>
         <div>
             <label for="fname">Game ID:</label>
             <input type="text" id="fname" name="fname"><br><br>
@@ -89,16 +91,61 @@
             </svg>
             <button onclick="onRunPlay()">RunPlay</button>
             <div class="slidecontainer">
-                <input type="range" min="0" max="100" value="0" class="slider" id="myRange"> <!-- onChange="onSliderChanged()">
-    -->    </div>
+                <input type="range" min="0" max="100" value="0" class="slider" id="myRange">
+                <!-- onChange="onSliderChanged()">
+    -->
+            </div>
+        </div>
     </div>
+    <div id="piechartBody">
+        <svg id="piechart" width="960" height="500">
+            <foreignObject x="30" y="10" width="200" height="450">
+        <div>
+            <h>Enter Filtering Criteria</h>
+        </div>
+        <div>
+            <label><input type="checkbox" id="gameId" onclick ="onCheck(gameId)"> By GameId: </label>
+            <input type="text" id="gameText" placeholder="Ex: 2018123005" disabled>
+            <button type="button" id="gameButton" onclick="onEnterId();" disabled>Enter</button>
+        </div>
+        <div>
+            <label><input type="checkbox" id="yearId" onclick ="onCheck(yearId)"> By Year (choose from 2018, 2019, or 2020): </label>
+            <input type="text" id="yearText" placeholder="Ex: 2018" disabled>
+            <button type="button" id="yearButton" onclick="onEnterYear();" disabled>Enter</button>
+        </div>
+        <div>
+        <label><input type="checkbox" id="playerId" onclick ="onCheck(playerId)"> By Player: </label>
+        <input type="text" id="playerText" placeholder="Ex: Patrick DiMarco"disabled>
+        <button type="button" id="playerButton" onclick="onEnterPlayer();" disabled>Enter</button>
+        </div>
+        </foreignObject>
+        </svg>
     </div>
-
+    <div id="barchartBody">
+        <svg id="barchart" style="border: 1px solid #777;">
+            <foreignObject x="30" y="100" width="200" height="450">
+            <div><label>Choose performance metric  </label></div>
+            <select class="categorySelect" id="yScaleSelect" onchange="onYScaleChanged()">
+              <option value="Total Distance">Total Distance</option>
+              <option value="Average Speed">Average Speed</option>
+            </select>
+            <div>
+                <label> Enter top number of players: </label>
+            </div>
+            <input type="text" id="numberPlayers">
+            <button type="button" id="playerButton" onclick="onButtonPressed()">Enter</button>
+            </foreignObject>
+            </svg>
+    </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 <script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="https://d3js.org/d3-array.v2.min.js"></script>
 <script src="./main.js"></script>
 <script src="./player_tracker.js"></script>
+<script src="./piechart.js"></script>
+<script src="./barchart.js"></script>
+
 </html>
