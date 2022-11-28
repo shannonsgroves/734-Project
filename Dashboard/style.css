@@ -65,3 +65,20 @@ rect:hover {
 h {
     font: 20px sans-serif;
 }
+
+.dot circle {
+    fill: #2381b3;
+    opacity: 0.8;
+}
+
+.dot text {
+    text-anchor: middle;
+    font-size: 10px;
+    pointer-events: none;
+    fill: #555;
+    opacity: 0;
+}
+
+.dot:hover text {
+    opacity: 1;
+}

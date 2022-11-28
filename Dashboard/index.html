@@ -6,6 +6,7 @@
     <title>Final Project</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" href="./style.css">
+    <link rel="shortcut icon" href="#">
 </head>
 
 <body>
@@ -137,6 +138,40 @@
             </foreignObject>
             </svg>
     </div>
+    <div id="Speed-Weather">
+        <div style="position:relative; top: 300px; margin-left: 20px;">
+            <div>
+                <label for="categorySelect">Y Scale:</label>
+            </div>
+            <select class="custom-select small" id="yScaleSelect" onchange="onYScaleChanged()">
+                <option value="speed">speed (yards/sec)</option>
+                <option value="Temperature">temperature</option>
+            </select>
+        </div>
+        <div style="position:relative; margin-left: 160px;">
+            <svg id="weather" width="600" height="600" style="border: 1px solid #777;">
+            </svg>
+        </div>
+        <div style="position:relative; margin-left: 380px;">
+            <label for="categorySelect">X Scale:</label>
+            <select class="custom-select small" id="xScaleSelect" onchange="onXScaleChanged()">
+                <option value="Temperature">temperature</option>
+                <option value="speed">speed (yards/sec)</option>
+            </select>
+        </div>
+        <br><br>
+        <div style="position:relative; margin-left:160px;">
+            <form id="PlayerId">
+                <input type="text" name="PlayerId" id="PlayerId-field" class="PlayerId-field" placeholder="Specific nflId or All"/>
+            </form>
+            <br>
+            <form id="DataSelection">
+                <input type="button" value="Season of 2018" id="Season-select" onclick="updateChartData(2018)"/>
+                <input type="button" value="Season of 2019" id="Season-select" onclick="updateChartData(2019)"/>
+                <input type="button" value="Season of 2020" id="Season-select" onclick="updateChartData(2020)"/>
+            </form>
+        </div>
+    </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
@@ -147,5 +182,6 @@
 <script src="./player_tracker.js"></script>
 <script src="./piechart.js"></script>
 <script src="./barchart.js"></script>
+<script src="./weather.js"></script>
 
 </html>

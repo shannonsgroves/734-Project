@@ -16,13 +16,6 @@
             <select class="custom-select small" id="yScaleSelect" onchange="onYScaleChanged()">
                 <option value="speed">speed (yards/sec)</option>
                 <option value="Temperature">temperature</option>
-              <!-- <option value="economy (mpg)">economy (mpg)</option>
-              <option value="cylinders">cylinders</option>
-              <option value="displacement (cc)">displacement (cc)</option>
-              <option selected value="power (hp)">power (hp)</option>
-              <option value="weight (lb)">weight (lb)</option>
-              <option value="0-60 mph (s)">0-60 mph (s)</option>
-              <option value="year">year</option> -->
             </select>
         </div>
         <div style="margin-left: 160px;">
@@ -34,35 +27,24 @@
             <select class="custom-select small" id="xScaleSelect" onchange="onXScaleChanged()">
                 <option value="Temperature">temperature</option>
                 <option value="speed">speed (yards/sec)</option>
-              <!-- <option selected value="economy (mpg)">economy (mpg)</option>
-              <option value="cylinders">cylinders</option>
-              <option value="displacement (cc)">displacement (cc)</option>
-              <option value="power (hp)">power (hp)</option>
-              <option value="weight (lb)">weight (lb)</option>
-              <option value="0-60 mph (s)">0-60 mph (s)</option>
-              <option value="year">year</option> -->
             </select>
         </div>
         <br><br>
-        <form id="DataSelection">
-            <input type="button" value="Season of 2018" id="Season-select" onclick="selectYear2018()"/>
-            <input type="button" value="Season of 2019" id="Season-select" onclick="selectYear2019()"/>
-            <input type="button" value="Season of 2020" id="Season-select" onclick="selectYear2020()"/>
-        </form>
-        <br><br>
         <form id="PlayerId">
             <input type="text" name="PlayerId" id="PlayerId-field" class="PlayerId-field" placeholder="Specific nflId or All"/>
-            <input type="button" value="Select" id="PlayerId-submit" onclick="updateChartData()"/>
         </form>
         <br><br>
-        <form id="Show">
-            <input type="button" value="Show" id="Show-Data" onclick="updateChart()"/>
+        <form id="DataSelection">
+            <input type="button" value="Season of 2018" id="Season-select" onclick="updateChartData(2018)"/>
+            <input type="button" value="Season of 2019" id="Season-select" onclick="updateChartData(2019)"/>
+            <input type="button" value="Season of 2020" id="Season-select" onclick="updateChartData(2020)"/>
         </form>
+        <br><br>
     </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 <script src="https://d3js.org/d3.v5.min.js"></script>
-<script src="./main.js"></script>
+<script src="./weather.js"></script>
 </html>
