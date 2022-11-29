@@ -110,7 +110,8 @@ function updateChart() {
         .attr('fill', 'black')
         .style('pointer-events', 'auto')
         .on("click", function (d, i) {
-            uploadPlayToField(d.playId, d.gameId);})
+            // uploadPlayToField(d.playId, d.gameId);
+            uploadPlayToField(35, 2018121603);})
         .text(function (d, i) { return d.gameId + '\xa0\xa0\xa0\xa0\xa0' + d.playId + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.possessionTeam + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.quarter + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.gameClock});
 }
 
@@ -119,25 +120,25 @@ function updateChart() {
 var file_name = "tracking2018_playId_35.csv"
 
 // Get layout parameters
-var svg = d3.select('#field');
-var svgWidth = +svg.attr('width');
-var svgHeight = +svg.attr('height');
+var svg_f = d3.select('#field');
+var svg_fWidth = +svg_f.attr('width');
+var svg_fHeight = +svg_f.attr('height');
 
-field = svg.append("image")
+field = svg_f.append("image")
     .attr("xlink:href", "Field.png")
-    .attr('width', svgWidth)
-    .attr('height', svgHeight);
+    .attr('width', svg_fWidth)
+    .attr('height', svg_fHeight);
 
 var padding = {t: 30, r: 30, b: 30, l: 30};
 
-var fieldWidth = svgWidth - padding.l - padding.r;
-var fieldHeight = svgHeight - padding.t - padding.b;
+var fieldWidth = svg_fWidth - padding.l - padding.r;
+var fieldHeight = svg_fHeight - padding.t - padding.b;
 
-xScale = d3.scaleLinear()
+xScale_f = d3.scaleLinear()
     .domain([0, 100])
     .range([0, fieldWidth]);
 
-yScale = d3.scaleLinear()
+yScale_f = d3.scaleLinear()
     .domain([0, 50])
     .range([0, fieldHeight]);
 
@@ -213,14 +214,14 @@ function updateField(time) {
         return d["time"] == time;
     });
 
-    var playerG = svg.selectAll('.player')
+    var playerG = svg_f.selectAll('.player')
         .data(filteredPlayers) // Data-bind the planets array to the d3-selection
 
     var playerGEnter = playerG.enter() // Enter - selects incoming data-bound elements
         .append('g')        
         .attr('class', 'player') // Add the classname that we selected on
         .attr('transform', function(d){
-            return 'translate('+xScale(d['x']) + ',' + yScale(d['y']) + ')';
+            return 'translate('+xScale_f(d['x']) + ',' + yScale_f(d['y']) + ')';
         });
 
     playerG.append('circle')
@@ -235,7 +236,7 @@ function updateField(time) {
         .transition()
         .duration(100)
         .attr('transform', function(d) {
-            return 'translate('+xScale(d['x']) + ',' + yScale(d['y']) + ')';
+            return 'translate('+xScale_f(d['x']) + ',' + yScale_f(d['y']) + ')';
         });
 
     // circle
