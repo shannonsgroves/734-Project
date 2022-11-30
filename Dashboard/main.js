@@ -128,19 +128,20 @@ field = svg_f.append("image")
     .attr("xlink:href", "Field.png")
     .attr('width', svg_fWidth)
     .attr('height', svg_fHeight);
+    // .attr('transform', 'translate(0,-0)')
 
-// var padding = {t: 30, r: 30, b: 30, l: 30};
 var padding = {t: 0, r: 0, b: 0, l: 0};
+// var padding = {t: 50, r: 50, b: 50, l: 50};
 
 var fieldWidth = svg_fWidth - padding.l - padding.r;
 var fieldHeight = svg_fHeight - padding.t - padding.b;
 
 xScale_f = d3.scaleLinear()
-    .domain([0, 120])  // should be up to 120 but 100 worked
+    .domain([0, 120])
     .range([0, fieldWidth]);
 
 yScale_f = d3.scaleLinear()
-    .domain([0, 53.3]) // should be up to 53.3 but 50 worked
+    .domain([0, 53.3])
     .range([0, fieldHeight]);
 
 colorScale = d3.scaleOrdinal(d3['schemeDark2'])
@@ -223,7 +224,7 @@ function updateField(time) {
         .append('g')        
         .attr('class', 'player') // Add the classname that we selected on
         .attr('transform', function(d){
-            return 'translate('+xScale_f(d['x']) + ',' + yScale_f(d['y']) + ')';
+            return 'translate('+ (padding.l + xScale_f(d['x'])) + ',' + (padding.t + yScale_f(d['y'])) + ')';
         });
 
     playerG.append('circle')
@@ -238,7 +239,7 @@ function updateField(time) {
         .transition()
         .duration(100)
         .attr('transform', function(d) {
-            return 'translate('+xScale_f(d['x']) + ',' + yScale_f(d['y']) + ')';
+            return 'translate('+ (padding.l + xScale_f(d['x'])) + ',' + (padding.t + yScale_f(d['y'])) + ')';
         });
 
     // circle
