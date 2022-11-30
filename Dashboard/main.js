@@ -110,8 +110,7 @@ function updateChart() {
         .attr('fill', 'black')
         .style('pointer-events', 'auto')
         .on("click", function (d, i) {
-            // uploadPlayToField(d.playId, d.gameId);
-            uploadPlayToField(35, 2018121603);})
+            uploadPlayToField(d.playId, d.gameId);})
         .text(function (d, i) { return d.gameId + '\xa0\xa0\xa0\xa0\xa0' + d.playId + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.possessionTeam + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.quarter + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.gameClock});
 }
 
