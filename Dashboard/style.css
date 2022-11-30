@@ -82,3 +82,8 @@ h {
 .dot:hover text {
     opacity: 1;
 }
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+}

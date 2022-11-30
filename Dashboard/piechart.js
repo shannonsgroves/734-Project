@@ -44,9 +44,16 @@ d3.csv("tracking2018_gameId_2018123001.csv").then(function(data) {
         return row.event !== 'None';
     })
 
-    var filteredPlayers = data.filter(function(row) {
-        return row.event !== 'None' && row.displayName !== 'football';
+    var filteredPlayers1 = data.filter(function(row) {
+        return row.displayName !== 'football';
     })
+
+    var filteredPlayers = filteredPlayers1.filter(function(row) {
+        return row.event !== 'None';
+    })
+
+    //filteredPlayers.forEach(x => console.log(x.event))
+
 
     groupedByGame = d3.group(filteredData, d => d.gameId)
     groupedByPlayer = d3.group(filteredPlayers, d => d.displayName)
@@ -157,7 +164,6 @@ function updatePiegraph(dataset, key, value) {
 
     text.enter().append('text').merge(text)
         .transition().duration(500)
-        //consider ease function
         .text(function(d) {
             return d.data[key]
         })
@@ -214,16 +220,3 @@ function onCheck(checkbox) {
             break;
     }
 }
-
-
-
-//2018123001
-
-
-//     ['kickoff', 'kick_received', 'first_contact',
-//         'tackle', 'ball_snap', 'extra_point_attempt',
-//         'out_of_bounds', 'extra_point', 'field_goal_attempt',
-//         'field_goal_missed', 'punt', 'punt_land', 'punt_received',
-//         'fair_catch', 'touchback', 'kickoff_land', 'field_goal',
-//         'punt_downed'
-//     ])
