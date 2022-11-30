@@ -55,7 +55,7 @@ d3.csv('cleaned_trackingall_withweather.csv', dataPreprocessor).then(function(da
         "speed": null,
         "Temperature": null
     };
-    console.log(empty_tracking);
+    // console.log(empty_tracking);
 
     xScaleWeather = d3.scaleLinear()
         .range([0, chartWeatherWidth]);
@@ -105,7 +105,7 @@ function updateChartData(year) {
             specific_tracking = specific_tracking.filter(row_data => row_data["nflId"] === playerIdWeather);
         }
     }
-    console.log(specific_tracking);
+    // console.log(specific_tracking);
 
     yScaleWeather.domain(domainMapWeather[chartScalesWeather.y]).nice();
     xScaleWeather.domain(domainMapWeather[chartScalesWeather.x]).nice();
@@ -130,12 +130,10 @@ function updateChartData(year) {
             if (d.gameId.startsWith("2018")) {
                 dotColor = '#2361b3';
             } else if (d.gameId.startsWith("2019")) {
-                // console.log("2019!!!");
                 dotColor = '#2381b3';
             } else {
                 dotColor = '#23a1b3';
             }
-            // console.log(d.gameId);
             return dotColor;
         })
         .style('opacity', 0.8);
@@ -144,66 +142,51 @@ function updateChartData(year) {
         .attr('y', -10)
         .style('font-size', '20px')
         .text(function(d) {
-            // console.log(d.gameId);
             return "GameId: "+d.gameId;
         });
     
-    dotsWeather.exit().remove();
-
-    dotsWeatherEnter.append('circle')
-        .attr('r', 5)
-        .style('fill', function(d) {
-            dotColor = '#2381b3';
-            // assume pre-process is nice
-            if (d.gameId.startsWith("2018")) {
-                dotColor = '#2361b3';
-            } else if (d.gameId.startsWith("2019")) {
-                // console.log("2019!!!");
-                dotColor = '#2381b3';
-            } else {
-                dotColor = '#23a1b3';
-            }
-            // console.log(d.gameId);
-            return dotColor;
-        })
-        .style('opacity', 0.8);
-
-    dotsWeatherEnter.append('text')
-        .attr('y', -10)
-        .style('font-size', '20px')
-        .text(function(d) {
-            // console.log(d.gameId);
-            return "GameId: "+d.gameId;
-        });
+    // dotsWeather.exit().remove();
 
     dotsWeather.merge(dotsWeatherEnter)
-    // .append('circle')
-    // .attr('r', 5)
-    // .style('fill', function(d) {
-    //     dotColor = '#2381b3';
-    //     // assume pre-process is nice
-    //     if (d.gameId.startsWith("2018")) {
-    //         dotColor = '#2361b3';
-    //     } else if (d.gameId.startsWith("2019")) {
-    //         // console.log("2019!!!");
-    //         dotColor = '#2381b3';
-    //     } else {
-    //         dotColor = '#23a1b3';
-    //     }
-    //     // console.log(d.gameId);
-    //     return dotColor;
-    // })
-    // .style('opacity', 0.8)
         .transition()
         .duration(750)
         .attr('transform', function(d) {
             var tx = xScaleWeather(d[chartScalesWeather.x]);
             var ty = yScaleWeather(d[chartScalesWeather.y]);
             var msg = 'translate('+[tx, ty]+')';
-            // console.log("2019!!!");
             return msg;
-            // return 'translate('+[tx, ty]+')';
         });
     
-    // dotsWeather.exit().remove();
+    dotsWeather.exit().remove();
+}
+
+function clearChartData() {
+    specific_tracking = empty_tracking;
+
+    yScaleWeather.domain(domainMapWeather[chartScalesWeather.y]).nice();
+    xScaleWeather.domain(domainMapWeather[chartScalesWeather.x]).nice();
+
+    xAxisWeatherG.transition()
+        .duration(750)
+        .call(d3.axisBottom(xScaleWeather));
+    yAxisWeatherG.transition()
+        .duration(750)
+        .call(d3.axisLeft(yScaleWeather));
+    
+    var dotsWeather = chartWeatherG.selectAll('.dot').data(specific_tracking);
+    var dotsWeatherEnter = dotsWeather.enter()
+        .append('g')
+        .attr('class', 'dot');
+
+    dotsWeather.merge(dotsWeatherEnter)
+        .transition()
+        .duration(750)
+        .attr('transform', function(d) {
+            var tx = xScaleWeather(d[chartScalesWeather.x]);
+            var ty = yScaleWeather(d[chartScalesWeather.y]);
+            var msg = 'translate('+[tx, ty]+')';
+            return msg;
+        });
+    
+    dotsWeather.exit().remove();
 }
