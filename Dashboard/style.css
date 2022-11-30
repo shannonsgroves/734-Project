@@ -66,10 +66,10 @@ h {
     font: 20px sans-serif;
 }
 
-.dot circle {
+/* .dot circle {
     fill: #2381b3;
     opacity: 0.8;
-}
+} */
 
 .dot text {
     text-anchor: middle;
