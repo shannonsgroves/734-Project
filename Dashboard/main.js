@@ -36,9 +36,11 @@ function dataPreprocessor(row) {
     };
 }
 
-d3.select('#block_container').append('g')
+d3.select('#main').append('div').append('g')
     .append('text')
-    .text('Game ID' + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + 'Play ID' + '\xa0\xa0\xa0\xa0\xa0' + 'Team Name' + '\xa0\xa0\xa0\xa0\xa0' + 'Quarter' + '\xa0\xa0\xa0\xa0\xa0' + 'Time');
+    .text('Game ID' + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + 'Play ID' + '\xa0\xa0\xa0\xa0\xa0' + 'Team Name' + '\xa0\xa0\xa0\xa0\xa0' + 'Quarter' + '\xa0\xa0\xa0\xa0\xa0' + 'Time')
+    .attr('x', -100)
+    .attr('y', 0);
 
 var container = d3.select('#block_container').append('div').attr('id', 'container').attr('width', 600);
 var curr_state = {
@@ -105,7 +107,7 @@ function updateChart() {
         .enter();
 
     var texts = texts.append('text')
-        .attr('x', 0)
+        .attr('x', 250)
         .attr('y', function (d, i) { return i * 2 * 20 })
         .attr('fill', 'black')
         .style('pointer-events', 'auto')
