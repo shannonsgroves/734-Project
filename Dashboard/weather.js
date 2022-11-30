@@ -99,7 +99,7 @@ function updateChartData(year) {
         console.log("All dot for some year:");
         console.log(year);
     } else {
-        if (isNaN(parseInt(playerId))) {
+        if (isNaN(parseInt(playerIdWeather))) {
             specific_tracking = specific_tracking.filter(row_data => row_data["playerName"] === playerIdWeather);
         } else {
             specific_tracking = specific_tracking.filter(row_data => row_data["nflId"] === playerIdWeather);
@@ -150,6 +150,32 @@ function updateChartData(year) {
     
     dotsWeather.exit().remove();
 
+    dotsWeatherEnter.append('circle')
+        .attr('r', 5)
+        .style('fill', function(d) {
+            dotColor = '#2381b3';
+            // assume pre-process is nice
+            if (d.gameId.startsWith("2018")) {
+                dotColor = '#2361b3';
+            } else if (d.gameId.startsWith("2019")) {
+                // console.log("2019!!!");
+                dotColor = '#2381b3';
+            } else {
+                dotColor = '#23a1b3';
+            }
+            // console.log(d.gameId);
+            return dotColor;
+        })
+        .style('opacity', 0.8);
+
+    dotsWeatherEnter.append('text')
+        .attr('y', -10)
+        .style('font-size', '20px')
+        .text(function(d) {
+            // console.log(d.gameId);
+            return "GameId: "+d.gameId;
+        });
+
     dotsWeather.merge(dotsWeatherEnter)
     // .append('circle')
     // .attr('r', 5)
@@ -174,7 +200,7 @@ function updateChartData(year) {
             var tx = xScaleWeather(d[chartScalesWeather.x]);
             var ty = yScaleWeather(d[chartScalesWeather.y]);
             var msg = 'translate('+[tx, ty]+')';
-            console.log("2019!!!");
+            // console.log("2019!!!");
             return msg;
             // return 'translate('+[tx, ty]+')';
         });
