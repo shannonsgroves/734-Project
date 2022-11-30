@@ -114,6 +114,7 @@ function updateChart() {
         .text(function (d, i) { return d.gameId + '\xa0\xa0\xa0\xa0\xa0' + d.playId + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.possessionTeam + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.quarter + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.gameClock});
 }
 
+//////////////////Field data (task 3)
 
 // tracking
 var file_name = "tracking2018_playId_35.csv"
@@ -128,17 +129,18 @@ field = svg_f.append("image")
     .attr('width', svg_fWidth)
     .attr('height', svg_fHeight);
 
-var padding = {t: 30, r: 30, b: 30, l: 30};
+// var padding = {t: 30, r: 30, b: 30, l: 30};
+var padding = {t: 0, r: 0, b: 0, l: 0};
 
 var fieldWidth = svg_fWidth - padding.l - padding.r;
 var fieldHeight = svg_fHeight - padding.t - padding.b;
 
 xScale_f = d3.scaleLinear()
-    .domain([0, 100])
+    .domain([0, 120])  // should be up to 120 but 100 worked
     .range([0, fieldWidth]);
 
 yScale_f = d3.scaleLinear()
-    .domain([0, 50])
+    .domain([0, 53.3]) // should be up to 53.3 but 50 worked
     .range([0, fieldHeight]);
 
 colorScale = d3.scaleOrdinal(d3['schemeDark2'])
@@ -181,12 +183,13 @@ function animate() {
 d3.csv(file_name).then(function(dataset) {
     trackingData = dataset;
     // update way to recieve play
-    // var playID = 35;
-    // var gameID = 2018121603;
-    // currentPlay = loadPlay(gameID, playID);
+    var playID = 35;
+    var gameID = 2018121603;
+    currentPlay = loadPlay(gameID, playID);
 });
 
 function uploadPlayToField(playID, gameID) {
+    console.log(playID + " " + gameID);
     currentPlay = loadPlay(gameID, playID);
     updateField(times[currentTime]);
     return currentPlay
