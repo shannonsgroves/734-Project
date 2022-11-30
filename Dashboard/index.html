@@ -140,34 +140,38 @@
         <div id="Speed-Weather">
             <div style="position:relative; top: 300px; margin-left: 20px;">
                 <div>
-                    <label for="categorySelect">Y Scale:</label>
+                    <label for="categorySelectWeather">Y Scale:</label>
                 </div>
-                <select class="custom-select small" id="yScaleSelect" onchange="onYScaleChanged()">
-                <option value="speed">speed (yards/sec)</option>
-                <option value="Temperature">temperature</option>
-            </select>
+                <select class="custom-select small" id="yScaleSelectWeather" onchange="onYScaleChangedWeather()">
+                    <option value="speed">speed (yards/sec)</option>
+                    <option value="Temperature">temperature</option>
+                </select>
             </div>
             <div style="position:relative; margin-left: 160px;">
                 <svg id="weather" width="600" height="600" style="border: 1px solid #777;">
-            </svg>
+                </svg>
             </div>
             <div style="position:relative; margin-left: 380px;">
-                <label for="categorySelect">X Scale:</label>
-                <select class="custom-select small" id="xScaleSelect" onchange="onXScaleChanged()">
-                <option value="Temperature">temperature</option>
-                <option value="speed">speed (yards/sec)</option>
-            </select>
+                <div>
+                    <label for="categorySelectWeather">X Scale:</label>
+                </div>
+                <select class="custom-select small" id="xScaleSelectWeather" onchange="onXScaleChangedWeather()">
+                    <option value="Temperature">temperature</option>
+                    <option value="speed">speed (yards/sec)</option>
+                </select>
             </div>
             <br><br>
             <div style="position:relative; margin-left:160px;">
-                <form id="PlayerId">
-                    <input type="text" name="PlayerId" id="PlayerId-field" class="PlayerId-field" placeholder="Specific nflId or All" />
+                <form id="PlayerIdWeather">
+                    <input type="text" name="PlayerIdWeather" id="PlayerId-field" class="PlayerId-field" placeholder="Specific nflId or All"/>
                 </form>
                 <br>
                 <form id="DataSelection">
-                    <input type="button" value="Season of 2018" id="Season-select" onclick="updateChartData(2018)" />
-                    <input type="button" value="Season of 2019" id="Season-select" onclick="updateChartData(2019)" />
-                    <input type="button" value="Season of 2020" id="Season-select" onclick="updateChartData(2020)" />
+                    <input type="button" value="All Season" id="Season-select" onclick="updateChartData('all')"/>
+                    <input type="button" value="Season of 2018" id="Season-select" onclick="updateChartData('2018')"/>
+                    <input type="button" value="Season of 2019" id="Season-select" onclick="updateChartData('2019')"/>
+                    <input type="button" value="Season of 2020" id="Season-select" onclick="updateChartData('2020')"/>
+                    <input type="button" value="Clear" id="Season-select" onclick="clearChartData()"/>
                 </form>
             </div>
         </div>
