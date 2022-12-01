@@ -1,9 +1,9 @@
 // Find tracking plays
 // var file_name = "tracking2018_playId_35.csv"
-var file_name = "tracking2018.csv"
+var file_name = "trackingfull.csv"
 
 gamesToPlays = {};
-d3.csv("tracking2020.csv", function(dataset3) {
+d3.csv(file_name).then(function(dataset) {
     trackingData = dataset;
     trackingData.forEach(function(value, index) {
         var gameId = value["gameId"];
@@ -13,21 +13,19 @@ d3.csv("tracking2020.csv", function(dataset3) {
             current.push(playId);
         } else {
             var current = gamesToPlays[gameId];
-
             if (!(current.includes(playId))) {
                 current.push(playId);
             }
         }
         gamesToPlays[gameId] = current;
     });
-    console.log(gamesToPlays);
-    // var games = (trackingData['gameId']).filter((item, i, ar) => ar.indexOf(item) === i);
+});
     // update way to recieve play
     // var playId = 35;
     // var gameId = 2018121603;
     // var year = 2018;
     // currentPlay = loadPlay(year, gameId, playId);
-});
+
 
 function update_team() {
     var select = d3.select('#team_name').node();
@@ -56,10 +54,32 @@ function update_event(event) {
     updateChart();
 }
 
+function update_type(type) {
+    if (curr_state['type'].includes(type)) {
+        curr_state['type'] = curr_state['type'].filter(function(e) { return e !== type })
+    } else {
+        curr_state['type'].push(type)
+    }
+
+    updateChart();
+}
+
+function update_result(result) {
+    if (curr_state['result'].includes(result)) {
+        curr_state['result'] = curr_state['result'].filter(function(e) { return e !== result })
+    } else {
+        curr_state['result'].push(result)
+    }
+
+    updateChart();
+}
+
 function dataPreprocessor(row) {
     return {
         'gameId': row['gameId'],
         'playId': row['playId'],
+        'specialTeamsPlayType': row['specialTeamsPlayType'].toLowerCase(),
+        'specialTeamsResult': row['specialTeamsResult'].toLowerCase(),
         'playDescription': row['playDescription'].toLowerCase(),
         'possessionTeam': row['possessionTeam'],
         'quarter': row['quarter'],
@@ -67,16 +87,18 @@ function dataPreprocessor(row) {
     };
 }
 
-d3.select('#main').append('div').append('g')
+d3.select('#plays_container').append('div').append('g')
     .append('text')
-    .text('Game ID' + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + 'Play ID' + '\xa0\xa0\xa0\xa0\xa0' + 'Team Name' + '\xa0\xa0\xa0\xa0\xa0' + 'Quarter' + '\xa0\xa0\xa0\xa0\xa0' + 'Time')
+    .text('Game ID' + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + 'Play ID' + '\xa0\xa0\xa0\xa0\xa0' + 'Team Name' + '\xa0\xa0\xa0\xa0\xa0' + 'Quarter' + '\xa0\xa0\xa0\xa0\xa0' + 'Time'+ '\xa0\xa0\xa0\xa0\xa0' + 'Play Type')
     .attr('x', -100)
     .attr('y', 0);
 
-var container = d3.select('#block_container').append('div').attr('id', 'container').attr('width', 600);
+var container = d3.select('#plays_container').append('div').attr('id', 'container').attr('width', 600);
 var curr_state = {
     'year': [],
     'event': [],
+    'type': [],
+    'result': [],
     'team': 'ALL'
 }
 
@@ -90,10 +112,11 @@ d3.csv('plays.csv', dataPreprocessor).then(function(dataset) {
 
 function updateChart() {
     viewbox.selectAll('g')
-        .remove()
+        .remove();
     viewbox.selectAll('rect')
-        .remove()
+        .remove();
 
+    console.log(curr_state);
     if (curr_state['year'].length != 0) {
         var filtered_plays = plays_data.filter(function(d){
             return curr_state['year'].some(el => d.gameId.substring(0,4) == el);
@@ -103,8 +126,25 @@ function updateChart() {
     }
 
     if (curr_state['event'].length != 0) {
+        console.log(filtered_plays);
         var filtered_plays = filtered_plays.filter(function(d){
             return curr_state['event'].some(el => d.playDescription.includes(el));
+        });
+    } else {
+        filtered_plays = filtered_plays
+    }
+
+    if (curr_state['type'].length != 0) {
+        var filtered_plays = filtered_plays.filter(function(d){
+            return curr_state['type'].some(el => d.specialTeamsPlayType.includes(el));
+        });
+    } else {
+        filtered_plays = filtered_plays
+    }
+
+    if (curr_state['result'].length != 0) {
+        var filtered_plays = filtered_plays.filter(function(d){
+            return curr_state['result'].some(el => d.specialTeamsResult.includes(el));
         });
     } else {
         filtered_plays = filtered_plays
@@ -134,7 +174,7 @@ function updateChart() {
     rect_height = filtered_plays.length * 20
     
     viewbox.append('rect')
-        .attr('width', 600)
+        .attr('width', 1000)
         .attr('height', rect_height)
         .attr('fill', 'white')
         .attr('x', 0)
@@ -162,10 +202,48 @@ function updateChart() {
             };
             return color;
         })
+        .attr('text-align','start')
         .style('pointer-events', 'auto')
         .on("click", function (d, i) {
             uploadPlayToField(d.playId, d.gameId);})
-        .text(function (d, i) { return d.gameId + '\xa0\xa0\xa0\xa0\xa0' + d.playId + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.possessionTeam + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.quarter + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.gameClock});
+        .text(function (d, i) { 
+            return d.gameId + '\xa0\xa0\xa0\xa0\xa0' + d.playId + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.possessionTeam + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.quarter + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.gameClock + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.specialTeamsPlayType
+        });
+
+    // var playTableBody = d3.select('#play-table tbody');
+    
+    // viewbox.selectAll('tr').remove();
+    // var trPlayer = playTableBody.selectAll('tr')
+    //     .data(filtered_plays)
+    //     .enter()
+    //     .append('tr');
+
+    // trPlayer.append('td').style('text-align','center')
+    //     .text(function(play){
+    //         return play['gameId'];
+    //     });
+    // trPlayer.append('td').style('text-align','center')
+    //     .text(function(play){
+    //         return play['playId'];
+    //     });
+    // trPlayer.append('td').style('text-align','center')
+    //     .text(function(play){
+    //         return play['possessionTeam'];
+    //     });
+    // trPlayer.append('td').style('text-align','center')
+    //     .text(function(play){
+    //         return play['quarter'];
+    //     });
+    // trPlayer.append('td').style('text-align','center')
+    //     .text(function(play){
+    //         return play['gameClock'];
+    //     });
+    // trPlayer.append('td').style('text-align','center')
+    //     .text(function(play){
+    //         return play['specialTeamsPlayType'];
+    //     });
+    // trPlayer.on("click", function (d, i) {
+    //         uploadPlayToField(d.playId, d.gameId);})
 }
 
 //////////////////Field data (task 3)
@@ -222,14 +300,16 @@ isClicked = false;
 numFrames = -1;
 
 function onRunPlay() {
+    console.log(isClicked);
+    console.log(currentTime);
+    console.log(numFrames);
     isClicked = !isClicked;
-    console.log(playText);
     animate();
 };
 
 function animate() {
     var interval = window.setInterval(() => {
-        if (!isClicked || (currentTime >= numFrames)) {
+        if ((!isClicked) || (currentTime >= numFrames)) {
             clearInterval(interval);
         } else {
             // TODO terminate at end of play
@@ -242,10 +322,14 @@ function animate() {
 
 function uploadPlayToField(playId, gameId) {
     var year = 2018;
-    console.log(year + " " + playId + " " + gameId);
     currentPlay = loadPlay(year, gameId, playId);
+    currentTime = 1;
+    slider.value = 1;
+    isClicked = false;
     updateField(currentTime);
-    return currentPlay
+    console.log(currentTime);
+    console.log(numFrames);
+    return currentPlay;
 }
 
 function loadPlay(year, gameId, playId) {
@@ -253,18 +337,12 @@ function loadPlay(year, gameId, playId) {
     var currentPlay = trackingData.filter(function(d){
         return d["playId"] == playId && d["gameId"] == gameId;
     });
-    // currentPlay.forEach(function(value, index) {
-    //     if (!times.includes(value["time"])) {
-    //         times.push(value["time"]);
-    //     };
-    // });
+    console.log(currentPlay);
     if (currentPlay.length > 0) {
         numFrames = d3.max(currentPlay, function(d) {
-            return d.frameId;
+            return Number(d.frameId);
         });        
     }
-    console.log(numFrames);
-    console.log(currentPlay);
     playText = "";
     if (numFrames < 0) {
         playText = "PLAY NOT FOUND! Please select a game with red text";// todo
@@ -292,7 +370,9 @@ function updateField(time) {
         .append('g')        
         .attr('class', 'player') // Add the classname that we selected on
         .attr('transform', function(d){
-            return 'translate('+ (padding.l + xScale_f(d['x'])) + ',' + (padding.t + yScale_f(d['y'])) + ')';
+            var x = d.playDirection == "right" ? (padding.l + xScale_f(d['x'])) : fieldWidth - (padding.l + xScale_f(d['x']));
+            var y = (padding.t + yScale_f(d['y']));
+            return 'translate('+ x + ',' + y + ')';
         });
 
     playerG.append('circle')

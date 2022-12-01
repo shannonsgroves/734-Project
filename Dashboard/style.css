@@ -1,3 +1,9 @@
+.header {
+  padding: 60px;
+  text-align: center;
+*/  font-size: 30px;
+}
+
 .axis-label {
     text-anchor: middle;
     font-size: 12px;
@@ -15,26 +21,39 @@ body {
 
 div#container {
     height: 600px;
-    width: 400px;
+    width: 500px;
     border: 2px solid #000;
     overflow: scroll;
     float: left;
 }
 
 #block_container {
-    text-align: center;
+    display: inline-flex;
+    align-content: space-between;
+    padding: 10px;
+
+}
+
+#plays_container {
+    /*text-align: center;*/
+    padding: 30px;
 }
 
 #field_container {
-    float: right;
+    /*float: right;*/
+    padding: 30px;
 }
 
 #top_infocontainer {
-    float: left;
+    display: inline-block;
 }
 
 #runplay {
     float: right;
+}
+
+g {
+    text-align: left;
 }
 
 button {
