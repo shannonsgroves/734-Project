@@ -146,31 +146,32 @@
               </div>
             </div>
         </div>
-        <div id="piechartBody">
-            <svg id="piechart" width="960" height="500">
-            <foreignObject x="30" y="10" width="200" height="450">
-        <div>
-            <h>Enter Filtering Criteria</h>
-        </div>
-        <div>
-            <label><input type="checkbox" id="gameId" onclick ="onCheck(gameId)"> By GameId: </label>
-            <input type="text" id="gameText" placeholder="Ex: 2018123005" disabled>
-            <button type="button" id="gameButton" onclick="onEnterId();" disabled>Enter</button>
-        </div>
-        <div>
-            <label><input type="checkbox" id="yearId" onclick ="onCheck(yearId)"> By Year (choose from 2018, 2019, or 2020): </label>
-            <input type="text" id="yearText" placeholder="Ex: 2018" disabled>
-            <button type="button" id="yearButton" onclick="onEnterYear();" disabled>Enter</button>
-        </div>
-        <div>
-        <label><input type="checkbox" id="playerId" onclick ="onCheck(playerId)"> By Player: </label>
-        <input type="text" id="playerText" placeholder="Ex: Patrick DiMarco"disabled>
-        <button type="button" id="playerButton" onclick="onEnterPlayer();" disabled>Enter</button>
-        </div>
-        </foreignObject>
-        </svg>
-        </div>
-        <div id="barchartBody">
+        <div id="second_row_containers">
+          <div id="piechartBody">
+              <svg id="piechart" width="960" height="500">
+              <foreignObject x="30" y="10" width="200" height="450">
+          <div>
+              <h>Enter Filtering Criteria</h>
+          </div>
+          <div>
+              <label><input type="checkbox" id="gameId" onclick ="onCheck(gameId)"> By GameId: </label>
+              <input type="text" id="gameText" placeholder="Ex: 2018123005" disabled>
+              <button type="button" id="gameButton" onclick="onEnterId();" disabled>Enter</button>
+          </div>
+          <div>
+              <label><input type="checkbox" id="yearId" onclick ="onCheck(yearId)"> By Year (choose from 2018, 2019, or 2020): </label>
+              <input type="text" id="yearText" placeholder="Ex: 2018" disabled>
+              <button type="button" id="yearButton" onclick="onEnterYear();" disabled>Enter</button>
+          </div>
+          <div>
+          <label><input type="checkbox" id="playerId" onclick ="onCheck(playerId)"> By Player: </label>
+          <input type="text" id="playerText" placeholder="Ex: Patrick DiMarco"disabled>
+          <button type="button" id="playerButton" onclick="onEnterPlayer();" disabled>Enter</button>
+          </div>
+          </foreignObject>
+          </svg>
+          </div>
+          <div id="barchartBody">
             <svg id="barchart" style="border: 1px solid #777;">
             <foreignObject x="30" y="100" width="200" height="450">
             <div><label>Choose performance metric  </label></div>
@@ -185,7 +186,10 @@
             <button type="button" id="playerButton" onclick="onButtonPressed()">Enter</button>
             </foreignObject>
             </svg>
+          </div>
         </div>
+  
+
         <div id="Speed-Weather">
             <div style="position:relative; top: 300px; margin-left: 20px;">
                 <div>
@@ -212,7 +216,7 @@
             <br><br>
             <div style="position:relative; margin-left:160px;">
                 <form id="PlayerIdWeather">
-                    <input type="text" name="PlayerIdWeather" id="PlayerId-field" class="PlayerId-field" placeholder="Specific nflId or All"/>
+                    <input type="text" name="PlayerIdWeather" id="PlayerId-field" class="PlayerId-field" placeholder="Input Player Name or All"/>
                 </form>
                 <br>
                 <form id="DataSelection">

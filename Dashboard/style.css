@@ -1,7 +1,7 @@
 .header {
   padding: 60px;
   text-align: center;
-*/  font-size: 30px;
+  /*font-size: 30px;*/
 }
 
 .axis-label {
@@ -13,6 +13,12 @@
 body {
     font-family: "Open Sans";
     margin: 0;
+    background-color: #D0D0D0;
+    /*background-color: #87CEEB;*/
+}
+
+body.text {
+    font-size: 15px;
 }
 
 #main {
@@ -25,13 +31,13 @@ div#container {
     border: 2px solid #000;
     overflow: scroll;
     float: left;
+    background-color: #87CEEB;
 }
 
 #block_container {
     display: inline-flex;
     align-content: space-between;
     padding: 10px;
-
 }
 
 #plays_container {
@@ -46,6 +52,21 @@ div#container {
 
 #top_infocontainer {
     display: inline-block;
+}
+
+#second_row_containers {
+    display: inline-flex;
+    align-content: space-between;
+    padding: 10px;
+    background-color: #87CEEB;
+}
+
+#piechart {
+    /*background-color: #87CEEB;*/
+}
+
+#barchart {
+    /*background-color: #87CEEB;*/
 }
 
 #runplay {
@@ -168,7 +189,7 @@ h {
   appearance: none;
   width: 80%; /* Full-width */
   height: 25px; /* Specified height */
-  background: #d3d3d3; /* Grey background */
+  background: #FFFF00; /* Grey background */
   outline: none;  Remove outline 
   opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
   -webkit-transition: .2s; /* 0.2 seconds transition on hover */
@@ -178,4 +199,9 @@ h {
 .flex-container {
     display: flex;
     flex-direction: column;
+    display: inline-flex;
+    align-content: space-between;
+    align-items:center;
+    justify-content: center;
+    padding: 10px;
 }

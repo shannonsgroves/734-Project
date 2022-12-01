@@ -112,6 +112,7 @@ function onEnterPlayer() {
     if (Array.from(groupedByPlayer.keys()).includes(player)) {
         var groupedByEvent = d3.group(groupedByPlayer.get(player), d => d.event)
         var eventFrequencies = []
+        console.log(groupedByEvent);
 
         groupedByEvent.forEach((value, key) => {
             eventFrequencies.push({

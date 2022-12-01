@@ -282,6 +282,7 @@ field = svg_f.append("image")
 playText = "";
 playTextBox = d3.select('#playinfo');
 playTextBox.text(playText)
+    .attr('font-weight', 'bold')
     .attr('fill', 'black');
 
 var padding = {t: 30, r: 25, b: 30, l: 25};
@@ -368,7 +369,7 @@ function loadPlay(year, gameId, playId) {
     } else {
         playText = "Game: " + gameId + " play: " + playId;
     };
-    playTextBox.text(playText)
+    playTextBox.text(playText).attr('font-weight', 'bold');
 
     currentTime = 1;
     slider.max = numFrames-1;

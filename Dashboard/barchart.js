@@ -59,8 +59,8 @@ var mouseover2 = function(d) {
     var option = select.options[select.selectedIndex].value
     barchartToolTip
         .style("opacity", 1)
-        .style("left", (d3.mouse(this)[0] + 200) + "px")
-        .style("top", (d3.mouse(this)[1] + 1850) + "px")
+        .style("left", (d3.mouse(this)[0] + 1100) + "px")
+        .style("top", (d3.mouse(this)[1] + 1450) + "px")
         .style('position', 'absolute')
 
     if (option === 'Total Distance') {
@@ -75,8 +75,8 @@ var mouseover2 = function(d) {
 
 var mousemove2 = function(d) {
     toolTip
-        .style("left", (d3.mouse(this)[0] + 200) + "px")
-        .style("top", (d3.mouse(this)[1] + 1850) + "px")
+        .style("left", (d3.mouse(this)[0] + 1100) + "px")
+        .style("top", (d3.mouse(this)[1] + 1450) + "px")
         .style('position', 'absolute')
 }
 
