@@ -40,10 +40,7 @@ var mouseleave = function(d) {
 
 
 
-Promise.all([
-    d3.csv("test1.csv"),
-    d3.csv("test2.csv")
-]).then(function(files) {
+Promise.all([]).then(function(files) {
     // files[0] will contain file1.csv
     // files[1] will contain file2.csv
     var combinedData = []

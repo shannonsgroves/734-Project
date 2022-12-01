@@ -88,34 +88,21 @@ var mouseleave2 = function(d) {
 
 
 Promise.all([
-    d3.csv("test1.csv"),
-    d3.csv("test2.csv")
+    d3.csv("truncated_trackingall.csv")
 ]).then(function(files) {
-    // files[0] will contain file1.csv
-    // files[1] will contain file2.csv
-    var combinedData = []
 
-    files[0].forEach(function(d) {
-        combinedData.push(d);
-    });
-
-    files[1].forEach(function(d) {
-        combinedData.push(d);
-    });
-
-    //console.log(combinedData)
-    var filteredData = combinedData.filter(row => { return row.displayName !== 'football' })
-    groupedByPlayer = d3.group(filteredData, d => d.displayName)
+    var filteredData = files[0].filter(row => { return row.playerName !== 'football' })
+    groupedByPlayer = d3.group(filteredData, d => d.playerName)
 
     groupedByPlayer.forEach((games, player) => {
         var totalDistance = games.reduce((accumulator, row) => {
-            row.dis = +row.dis
-            return accumulator + row.dis
+            row.distance = +row.distance
+            return accumulator + row.distance
         }, 0)
 
         var totalSpeed = games.reduce((accumulator, row) => {
-            row.s = +row.s
-            return accumulator + row.s
+            row.speed = +row.speed
+            return accumulator + row.speed
         }, 0)
 
 
