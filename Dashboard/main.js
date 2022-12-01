@@ -216,12 +216,12 @@ function updateChart() {
     var table = container.append('table').attr('id', 'play-table');
     var thead = table.append('thead');
     var tr = thead.append('tr');
-    tr.append('td').text('GameId').style('text-align','center');
-    tr.append('td').text('PlayId').style('text-align','center');
-    tr.append('td').text('Team').style('text-align','center');
-    tr.append('td').text('Quarter').style('text-align','center');
-    tr.append('td').text('Time').style('text-align','center');
-    tr.append('td').text('PlayType').style('text-align','center');
+    tr.append('td').text('\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0').style('text-align','center');
+    tr.append('td').text('\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0').style('text-align','center');
+    tr.append('td').text('\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0').style('text-align','center');
+    tr.append('td').text('\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0').style('text-align','center');
+    tr.append('td').text('\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0').style('text-align','center');
+    tr.append('td').text('\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0').style('text-align','center');
 
     var playTableBody = table.append('tbody');
 
