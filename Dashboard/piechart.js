@@ -23,7 +23,7 @@ var mouseover = function(d) {
         .html("Event: " + d.data.event + "<br>" + "Frequency: " + d.data.frequency)
         .style("opacity", 1)
         .style("left", (d3.mouse(this)[0] + 400) + "px")
-        .style("top", (d3.mouse(this)[1] + 1750) + "px")
+        .style("top", (d3.mouse(this)[1] + 1650) + "px")
 }
 
 var mousemove = function(d) {

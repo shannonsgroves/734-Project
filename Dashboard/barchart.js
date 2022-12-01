@@ -60,7 +60,7 @@ var mouseover2 = function(d) {
     barchartToolTip
         .style("opacity", 1)
         .style("left", (d3.mouse(this)[0] + 200) + "px")
-        .style("top", (d3.mouse(this)[1] + 2050) + "px")
+        .style("top", (d3.mouse(this)[1] + 1850) + "px")
         .style('position', 'absolute')
 
     if (option === 'Total Distance') {
