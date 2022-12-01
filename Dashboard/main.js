@@ -102,8 +102,8 @@ var curr_state = {
     'team': 'ALL'
 }
 
-var viewbox = container.append('svg')
-    .attr('viewBox', '0,0,600,2000');
+// var viewbox = container.append('svg')
+//     .attr('viewBox', '0,0,600,2000');
 
 d3.csv('plays.csv', dataPreprocessor).then(function(dataset) {
     plays_data = dataset;
@@ -111,10 +111,10 @@ d3.csv('plays.csv', dataPreprocessor).then(function(dataset) {
 });
 
 function updateChart() {
-    viewbox.selectAll('g')
-        .remove();
-    viewbox.selectAll('rect')
-        .remove();
+    // viewbox.selectAll('g')
+    //     .remove();
+    // viewbox.selectAll('rect')
+    //     .remove();
 
     console.log(curr_state);
     if (curr_state['year'].length != 0) {
@@ -173,77 +173,92 @@ function updateChart() {
 
     rect_height = filtered_plays.length * 20
     
-    viewbox.append('rect')
-        .attr('width', 1000)
-        .attr('height', rect_height)
-        .attr('fill', 'white')
-        .attr('x', 0)
-        .attr('y', 0);
+    // viewbox.append('rect')
+    //     .attr('width', 1000)
+    //     .attr('height', rect_height)
+    //     .attr('fill', 'white')
+    //     .attr('x', 0)
+    //     .attr('y', 0);
 
-    var group = viewbox.append('g')
-        .attr('x', 0)
-        .attr('y', 0);
+    // var group = viewbox.append('g')
+    //     .attr('x', 0)
+    //     .attr('y', 0);
     
-    var texts = group.selectAll('g')
-        .data(filtered_plays)
-        .enter();
+    // var texts = group.selectAll('g')
+    //     .data(filtered_plays)
+    //     .enter();
 
-    var texts = texts.append('text')
-        .attr('x', 250)
-        .attr('y', function (d, i) { return i * 2 * 20 })
-        .attr('fill', function(d, i) {
-            // TODO make red if we want
-            var color = 'black';
-            if ((d.gameId in gamesToPlays)) {
-                var current = gamesToPlays[d.gameId];
-                if ((current.includes(Number(d.playId)))) {
-                    color = 'black';
-                };
-            };
-            return color;
-        })
-        .attr('text-align','start')
-        .style('pointer-events', 'auto')
-        .on("click", function (d, i) {
-            uploadPlayToField(d.playId, d.gameId);})
-        .text(function (d, i) { 
-            return d.gameId + '\xa0\xa0\xa0\xa0\xa0' + d.playId + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.possessionTeam + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.quarter + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.gameClock + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.specialTeamsPlayType
-        });
+    // var texts = texts.append('text')
+    //     .attr('x', 250)
+    //     .attr('y', function (d, i) { return i * 2 * 20 })
+    //     .attr('fill', function(d, i) {
+    //         // TODO make red if we want
+    //         var color = 'black';
+    //         if ((d.gameId in gamesToPlays)) {
+    //             var current = gamesToPlays[d.gameId];
+    //             if ((current.includes(Number(d.playId)))) {
+    //                 color = 'black';
+    //             };
+    //         };
+    //         return color;
+    //     })
+    //     .attr('text-align','start')
+    //     .style('pointer-events', 'auto')
+    //     .on("click", function (d, i) {
+    //         uploadPlayToField(d.playId, d.gameId);})
+    //     .text(function (d, i) { 
+    //         return d.gameId + '\xa0\xa0\xa0\xa0\xa0' + d.playId + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.possessionTeam + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.quarter + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.gameClock + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + d.specialTeamsPlayType
+    //     });
+
+     
+    // viewbox.selectAll('tr').remove();
+    d3.selectAll('table').remove();
+    var table = container.append('table').attr('id', 'play-table');
+    var thead = table.append('thead');
+    var tr = thead.append('tr');
+    tr.append('td').text('GameId').style('text-align','center');
+    tr.append('td').text('PlayId').style('text-align','center');
+    tr.append('td').text('Team').style('text-align','center');
+    tr.append('td').text('Quarter').style('text-align','center');
+    tr.append('td').text('Time').style('text-align','center');
+    tr.append('td').text('PlayType').style('text-align','center');
+
+    var playTableBody = table.append('tbody');
 
     // var playTableBody = d3.select('#play-table tbody');
-    
-    // viewbox.selectAll('tr').remove();
-    // var trPlayer = playTableBody.selectAll('tr')
-    //     .data(filtered_plays)
-    //     .enter()
-    //     .append('tr');
 
-    // trPlayer.append('td').style('text-align','center')
-    //     .text(function(play){
-    //         return play['gameId'];
-    //     });
-    // trPlayer.append('td').style('text-align','center')
-    //     .text(function(play){
-    //         return play['playId'];
-    //     });
-    // trPlayer.append('td').style('text-align','center')
-    //     .text(function(play){
-    //         return play['possessionTeam'];
-    //     });
-    // trPlayer.append('td').style('text-align','center')
-    //     .text(function(play){
-    //         return play['quarter'];
-    //     });
-    // trPlayer.append('td').style('text-align','center')
-    //     .text(function(play){
-    //         return play['gameClock'];
-    //     });
-    // trPlayer.append('td').style('text-align','center')
-    //     .text(function(play){
-    //         return play['specialTeamsPlayType'];
-    //     });
-    // trPlayer.on("click", function (d, i) {
-    //         uploadPlayToField(d.playId, d.gameId);})
+
+    var trPlayer = playTableBody.selectAll('tr')
+        .data(filtered_plays)
+        .enter()
+        .append('tr');
+
+    trPlayer.append('td').style('text-align','center')
+        .text(function(play){
+            return play['gameId'];
+        });
+    trPlayer.append('td').style('text-align','center')
+        .text(function(play){
+            return play['playId'];
+        });
+    trPlayer.append('td').style('text-align','center')
+        .text(function(play){
+            return play['possessionTeam'];
+        });
+    trPlayer.append('td').style('text-align','center')
+        .text(function(play){
+            return play['quarter'];
+        });
+    trPlayer.append('td').style('text-align','center')
+        .text(function(play){
+            return play['gameClock'];
+        });
+    trPlayer.append('td').style('text-align','center')
+        .text(function(play){
+            return play['specialTeamsPlayType'];
+        });
+    trPlayer.on("click", function (d, i) {
+            uploadPlayToField(d.playId, d.gameId);})
 }
 
 //////////////////Field data (task 3)
