@@ -27,7 +27,7 @@ svg.append("text")
     .attr("x", -200)
     .attr("y", -40)
     .attr("transform", "rotate(-90)")
-    .text("Total Distance Over Season")
+    .text("Total Distance Over Season (yards)")
 
 
 var xAxis = svg.append("g")
@@ -58,11 +58,18 @@ var mouseover2 = function(d) {
     var select = d3.select('#yScaleSelect').node();
     var option = select.options[select.selectedIndex].value
     barchartToolTip
-        .html("Player: " + d.group + "<br> " + option + ": " + d.value)
         .style("opacity", 1)
         .style("left", (d3.mouse(this)[0] + 200) + "px")
         .style("top", (d3.mouse(this)[1] + 2050) + "px")
         .style('position', 'absolute')
+
+    if (option === 'Total Distance') {
+        barchartToolTip
+            .html("Player: " + d.group + "<br> " + option + ": " + d.value + " yards")
+    } else {
+        barchartToolTip
+            .html("Player: " + d.group + "<br> " + option + ": " + d.value + " yards/s")
+    }
 
 }
 
@@ -81,12 +88,23 @@ var mouseleave2 = function(d) {
 
 
 Promise.all([
-    d3.csv("tracking2018_gameId_2018123001.csv")
-    //d3.csv("file2.csv"),
+    d3.csv("test1.csv"),
+    d3.csv("test2.csv")
 ]).then(function(files) {
     // files[0] will contain file1.csv
     // files[1] will contain file2.csv
-    var filteredData = files[0].filter(row => { return row.displayName !== 'football' })
+    var combinedData = []
+
+    files[0].forEach(function(d) {
+        combinedData.push(d);
+    });
+
+    files[1].forEach(function(d) {
+        combinedData.push(d);
+    });
+
+    //console.log(combinedData)
+    var filteredData = combinedData.filter(row => { return row.displayName !== 'football' })
     groupedByPlayer = d3.group(filteredData, d => d.displayName)
 
     groupedByPlayer.forEach((games, player) => {
@@ -111,8 +129,6 @@ Promise.all([
     updateXScale(dataset)
 
 
-}).catch(function(err) {
-    // handle error here
 })
 
 
@@ -124,10 +140,10 @@ function onYScaleChanged() {
 
     if (option === 'Total Distance') {
         dataset = playerDistances
-        document.getElementById("y label").textContent = "Total Distance Over Season";
+        document.getElementById("y label").textContent = "Total Distance Over Season (yards)";
     } else {
         dataset = playerSpeeds
-        document.getElementById("y label").textContent = "Average Speed Over Season";
+        document.getElementById("y label").textContent = "Average Speed Over Season (yards/s)";
     }
 
     document.getElementById("x label").textContent = "Players"
