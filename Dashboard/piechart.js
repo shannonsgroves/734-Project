@@ -23,13 +23,13 @@ var mouseover = function(d) {
         .html("Event: " + d.data.event + "<br>" + "Frequency: " + d.data.frequency)
         .style("opacity", 1)
         .style("left", (d3.mouse(this)[0] + 400) + "px")
-        .style("top", (d3.mouse(this)[1] + 1650) + "px")
+        .style("top", (d3.mouse(this)[1] + 1550) + "px")
 }
 
 var mousemove = function(d) {
     toolTip
         .style("left", (d3.mouse(this)[0] + 400) + "px")
-        .style("top", (d3.mouse(this)[1] + 1650) + "px")
+        .style("top", (d3.mouse(this)[1] + 1550) + "px")
         .style('position', 'absolute')
 }
 

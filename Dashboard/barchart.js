@@ -27,7 +27,7 @@ svg.append("text")
     .attr("x", -200)
     .attr("y", -40)
     .attr("transform", "rotate(-90)")
-    .text("Total Distance Over Season (yards)")
+    .text("Total Distance Over Seasons (yards)")
 
 
 var xAxis = svg.append("g")
@@ -127,10 +127,10 @@ function onYScaleChanged() {
 
     if (option === 'Total Distance') {
         dataset = playerDistances
-        document.getElementById("y label").textContent = "Total Distance Over Season (yards)";
+        document.getElementById("y label").textContent = "Total Distance Over Seasons (yards)";
     } else {
         dataset = playerSpeeds
-        document.getElementById("y label").textContent = "Average Speed Over Season (yards/s)";
+        document.getElementById("y label").textContent = "Average Speed Over Seasons (yards/s)";
     }
 
     document.getElementById("x label").textContent = "Players"
