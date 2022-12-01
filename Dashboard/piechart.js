@@ -23,13 +23,13 @@ var mouseover = function(d) {
         .html("Event: " + d.data.event + "<br>" + "Frequency: " + d.data.frequency)
         .style("opacity", 1)
         .style("left", (d3.mouse(this)[0] + 400) + "px")
-        .style("top", (d3.mouse(this)[1] + 1750) + "px")
+        .style("top", (d3.mouse(this)[1] + 1550) + "px")
 }
 
 var mousemove = function(d) {
     toolTip
         .style("left", (d3.mouse(this)[0] + 400) + "px")
-        .style("top", (d3.mouse(this)[1] + 1750) + "px")
+        .style("top", (d3.mouse(this)[1] + 1550) + "px")
         .style('position', 'absolute')
 }
 
@@ -41,27 +41,11 @@ var mouseleave = function(d) {
 
 
 Promise.all([
-    d3.csv("test1.csv"),
-    d3.csv("test2.csv")
+    d3.csv("event_trackingall.csv")
 ]).then(function(files) {
-    // files[0] will contain file1.csv
-    // files[1] will contain file2.csv
-    var combinedData = []
 
-    files[0].forEach(function(d) {
-        combinedData.push(d);
-    });
-
-    files[1].forEach(function(d) {
-        combinedData.push(d);
-    });
-
-    var filteredData = combinedData.filter(function(row) {
-        return row.event !== 'None';
-    })
-
-    var filteredPlayers1 = combinedData.filter(function(row) {
-        return row.displayName !== 'football';
+    var filteredPlayers1 = files[0].filter(function(row) {
+        return row.playerName !== 'football';
     })
 
     var filteredPlayers = filteredPlayers1.filter(function(row) {
@@ -70,11 +54,10 @@ Promise.all([
 
 
 
-    groupedByGame = d3.group(filteredData, d => d.gameId)
-    groupedByPlayer = d3.group(filteredPlayers, d => d.displayName)
-    groupedByYear = d3.group(filteredData, d => d.gameId.substring(0, 4))
+    groupedByGame = d3.group(files[0], d => d.gameId)
+    groupedByPlayer = d3.group(filteredPlayers, d => d.playerName)
+    groupedByYear = d3.group(files[0], d => d.gameId.substring(0, 4))
 
-    console.log(groupedByGame)
 
 
 })

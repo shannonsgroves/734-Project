@@ -27,7 +27,7 @@ svg.append("text")
     .attr("x", -200)
     .attr("y", -40)
     .attr("transform", "rotate(-90)")
-    .text("Total Distance Over Season (yards)")
+    .text("Total Distance Over Seasons (yards)")
 
 
 var xAxis = svg.append("g")
@@ -60,7 +60,7 @@ var mouseover2 = function(d) {
     barchartToolTip
         .style("opacity", 1)
         .style("left", (d3.mouse(this)[0] + 200) + "px")
-        .style("top", (d3.mouse(this)[1] + 2050) + "px")
+        .style("top", (d3.mouse(this)[1] + 1850) + "px")
         .style('position', 'absolute')
 
     if (option === 'Total Distance') {
@@ -76,7 +76,7 @@ var mouseover2 = function(d) {
 var mousemove2 = function(d) {
     toolTip
         .style("left", (d3.mouse(this)[0] + 200) + "px")
-        .style("top", (d3.mouse(this)[1] + 2050) + "px")
+        .style("top", (d3.mouse(this)[1] + 1850) + "px")
         .style('position', 'absolute')
 }
 
@@ -88,34 +88,21 @@ var mouseleave2 = function(d) {
 
 
 Promise.all([
-    d3.csv("test1.csv"),
-    d3.csv("test2.csv")
+    d3.csv("truncated_trackingall.csv")
 ]).then(function(files) {
-    // files[0] will contain file1.csv
-    // files[1] will contain file2.csv
-    var combinedData = []
 
-    files[0].forEach(function(d) {
-        combinedData.push(d);
-    });
-
-    files[1].forEach(function(d) {
-        combinedData.push(d);
-    });
-
-    //console.log(combinedData)
-    var filteredData = combinedData.filter(row => { return row.displayName !== 'football' })
-    groupedByPlayer = d3.group(filteredData, d => d.displayName)
+    var filteredData = files[0].filter(row => { return row.playerName !== 'football' })
+    groupedByPlayer = d3.group(filteredData, d => d.playerName)
 
     groupedByPlayer.forEach((games, player) => {
         var totalDistance = games.reduce((accumulator, row) => {
-            row.dis = +row.dis
-            return accumulator + row.dis
+            row.distance = +row.distance
+            return accumulator + row.distance
         }, 0)
 
         var totalSpeed = games.reduce((accumulator, row) => {
-            row.s = +row.s
-            return accumulator + row.s
+            row.speed = +row.speed
+            return accumulator + row.speed
         }, 0)
 
 
@@ -140,10 +127,10 @@ function onYScaleChanged() {
 
     if (option === 'Total Distance') {
         dataset = playerDistances
-        document.getElementById("y label").textContent = "Total Distance Over Season (yards)";
+        document.getElementById("y label").textContent = "Total Distance Over Seasons (yards)";
     } else {
         dataset = playerSpeeds
-        document.getElementById("y label").textContent = "Average Speed Over Season (yards/s)";
+        document.getElementById("y label").textContent = "Average Speed Over Seasons (yards/s)";
     }
 
     document.getElementById("x label").textContent = "Players"
