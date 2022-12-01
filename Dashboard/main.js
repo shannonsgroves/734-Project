@@ -253,7 +253,7 @@ function updateChart() {
         .text(function(play){
             return play['gameClock'];
         });
-    trPlayer.append('td').style('text-align','center')
+    trPlayer.append('td').style('text-align','left')
         .text(function(play){
             return play['specialTeamsPlayType'];
         });
@@ -281,7 +281,8 @@ playTextBox = d3.select('#playinfo');
 playTextBox.text(playText)
     .attr('fill', 'black');
 
-var padding = {t: 0, r: 0, b: 0, l: 0};
+var padding = {t: 30, r: 25, b: 30, l: 25};
+
 // var padding = {t: 50, r: 50, b: 50, l: 50};
 
 var fieldWidth = svg_fWidth - padding.l - padding.r;
@@ -385,7 +386,8 @@ function updateField(time) {
         .append('g')        
         .attr('class', 'player') // Add the classname that we selected on
         .attr('transform', function(d){
-            var x = d.playDirection == "right" ? (padding.l + xScale_f(d['x'])) : fieldWidth - (padding.l + xScale_f(d['x']));
+            // var x = d.playDirection == "right" ? (padding.l + xScale_f(d['x'])) : fieldWidth - (padding.l + xScale_f(d['x']));
+            var x =(padding.l + xScale_f(d['x']));
             var y = (padding.t + yScale_f(d['y']));
             return 'translate('+ x + ',' + y + ')';
         });
@@ -402,7 +404,10 @@ function updateField(time) {
         .transition()
         .duration(100)
         .attr('transform', function(d) {
-            return 'translate('+ (padding.l + xScale_f(d['x'])) + ',' + (padding.t + yScale_f(d['y'])) + ')';
+            // var x = d.playDirection == "right" ? (padding.l + xScale_f(d['x'])) : fieldWidth - (padding.l + xScale_f(d['x']));
+            var x =(padding.l + xScale_f(d['x']));
+            var y = (padding.t + yScale_f(d['y']));
+            return 'translate('+ x + ',' + y + ')';
         });
 
     // circle
@@ -416,20 +421,38 @@ function updateField(time) {
 
     // name
     playerGEnter.append('text')
-        .attr('class', 'name') // Add the classname that we selected on
+        .attr('id', 'name') // Add the classname that we selected on
         .attr('dy', '-0.7em')
         .text(function(player){
             return player['displayName'];
         });
 
     // jersey number
-    // playerGEnter.append('text')
-    //  .attr('class', 'number') // Add the classname that we selected on
-    //  .attr('dx', '-0.45em')
-    //  .attr('dy', '0.2em')
-    //  .text(function(player){
-    //      return Math.trunc(player['jerseyNumber']);
-    //  });
+    playerG.append('text')
+        .attr('id', 'number') // Add the classname that we selected on
+        .attr('dx', '-0em')
+        .attr('dy', '0.25em')
+        // .attr('visibility','visible')
+        .text(function(player){
+            if (player['displayName']!='football') {
+                return Math.trunc(player['jerseyNumber']);
+            } else {
+                return "";
+            }
+        });
+
+    playerGEnter.append('text')
+        .attr('id', 'number') // Add the classname that we selected on
+        .attr('dx', '-0em')
+        .attr('dy', '0.25em')
+        // .attr('visibility','visible')
+        .text(function(player){
+            if (player['displayName']!='football') {
+                return Math.trunc(player['jerseyNumber']);
+            } else {
+                return "";
+            }
+        });
 
     playerG.exit().remove();
 }
