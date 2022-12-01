@@ -107,67 +107,70 @@ var curr_state = {
 
 d3.csv('plays.csv', dataPreprocessor).then(function(dataset) {
     plays_data = dataset;
-    updateChart()
+    updateChart(filter=false)
 });
 
-function updateChart() {
+function updateChart(filter=true) {
     // viewbox.selectAll('g')
     //     .remove();
     // viewbox.selectAll('rect')
     //     .remove();
 
-    console.log(curr_state);
-    if (curr_state['year'].length != 0) {
-        var filtered_plays = plays_data.filter(function(d){
-            return curr_state['year'].some(el => d.gameId.substring(0,4) == el);
+    if (filter == true) {
+        if (curr_state['year'].length != 0) {
+            var filtered_plays = plays_data.filter(function(d){
+                return curr_state['year'].some(el => d.gameId.substring(0,4) == el);
+            });
+        } else {
+            filtered_plays = plays_data
+        }
+    
+        if (curr_state['event'].length != 0) {
+            console.log(filtered_plays);
+            var filtered_plays = filtered_plays.filter(function(d){
+                return curr_state['event'].some(el => d.playDescription.includes(el));
+            });
+        } else {
+            filtered_plays = filtered_plays
+        }
+    
+        if (curr_state['type'].length != 0) {
+            var filtered_plays = filtered_plays.filter(function(d){
+                return curr_state['type'].some(el => d.specialTeamsPlayType.includes(el));
+            });
+        } else {
+            filtered_plays = filtered_plays
+        }
+    
+        if (curr_state['result'].length != 0) {
+            var filtered_plays = filtered_plays.filter(function(d){
+                return curr_state['result'].some(el => d.specialTeamsResult.includes(el));
+            });
+        } else {
+            filtered_plays = filtered_plays
+        }
+    
+        if (curr_state['team'] == 'ALL') {
+            filtered_plays = filtered_plays
+        } else {
+            var filtered_plays = filtered_plays.filter(function(d){
+                return d.possessionTeam == curr_state['team'];
+            });
+        }
+    
+        var filtered_plays = filtered_plays.filter(function(d){
+            if ((d.gameId in gamesToPlays)) {
+                var current = gamesToPlays[d.gameId];
+                if ((current.includes(Number(d.playId)))) {
+                    return true;
+                };
+            };
+            return false;
         });
-    } else {
+    }
+    else {
         filtered_plays = plays_data
     }
-
-    if (curr_state['event'].length != 0) {
-        console.log(filtered_plays);
-        var filtered_plays = filtered_plays.filter(function(d){
-            return curr_state['event'].some(el => d.playDescription.includes(el));
-        });
-    } else {
-        filtered_plays = filtered_plays
-    }
-
-    if (curr_state['type'].length != 0) {
-        var filtered_plays = filtered_plays.filter(function(d){
-            return curr_state['type'].some(el => d.specialTeamsPlayType.includes(el));
-        });
-    } else {
-        filtered_plays = filtered_plays
-    }
-
-    if (curr_state['result'].length != 0) {
-        var filtered_plays = filtered_plays.filter(function(d){
-            return curr_state['result'].some(el => d.specialTeamsResult.includes(el));
-        });
-    } else {
-        filtered_plays = filtered_plays
-    }
-
-    if (curr_state['team'] == 'ALL') {
-        filtered_plays = filtered_plays
-    } else {
-        var filtered_plays = filtered_plays.filter(function(d){
-            return d.possessionTeam == curr_state['team'];
-        });
-    }
-
-    var filtered_plays = filtered_plays.filter(function(d){
-        if ((d.gameId in gamesToPlays)) {
-            var current = gamesToPlays[d.gameId];
-            if ((current.includes(Number(d.playId)))) {
-                return true;
-            };
-        };
-        return false;
-    });
-
     
     filtered_plays = filtered_plays.slice(0, 100)
 
