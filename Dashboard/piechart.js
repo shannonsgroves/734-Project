@@ -39,12 +39,28 @@ var mouseleave = function(d) {
 }
 
 
-d3.csv("tracking2018_gameId_2018123001.csv").then(function(data) {
-    var filteredData = data.filter(function(row) {
+
+Promise.all([
+    d3.csv("test1.csv"),
+    d3.csv("test2.csv")
+]).then(function(files) {
+    // files[0] will contain file1.csv
+    // files[1] will contain file2.csv
+    var combinedData = []
+
+    files[0].forEach(function(d) {
+        combinedData.push(d);
+    });
+
+    files[1].forEach(function(d) {
+        combinedData.push(d);
+    });
+
+    var filteredData = combinedData.filter(function(row) {
         return row.event !== 'None';
     })
 
-    var filteredPlayers1 = data.filter(function(row) {
+    var filteredPlayers1 = combinedData.filter(function(row) {
         return row.displayName !== 'football';
     })
 
@@ -52,15 +68,16 @@ d3.csv("tracking2018_gameId_2018123001.csv").then(function(data) {
         return row.event !== 'None';
     })
 
-    //filteredPlayers.forEach(x => console.log(x.event))
 
 
     groupedByGame = d3.group(filteredData, d => d.gameId)
     groupedByPlayer = d3.group(filteredPlayers, d => d.displayName)
     groupedByYear = d3.group(filteredData, d => d.gameId.substring(0, 4))
 
+    console.log(groupedByGame)
 
-});
+
+})
 
 
 function onEnterId() {
