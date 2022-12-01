@@ -38,7 +38,10 @@
                 Punt
                 <input type="checkbox" id="event_injure" onclick="update_event('injure')">
                 Injury
-            </label>
+                <input type="checkbox" id="event_kick" onclick="update_event('kick')">
+                Kick
+
+                </label>
             </div>
             <div>
                 <label for="team_name">Team Name: </label>
@@ -89,12 +92,18 @@
         </div>
         <div id="block_container">
             <div id="field_container">
-                <svg id="field" width="1000" height="500" style="border: 1px solid #777;">
-            </svg>
-                <button onclick="onRunPlay()">RunPlay</button>
-                <div class="slidecontainer">
-                    <input type="range" min="0" max="100" value="0" class="slider" id="myRange">
+              <div id="top_fieldcontainer">
+                <div id="top_infocontainer">
+                  <label for="playinfo">Play Info:</label>
+                  <text type="text" id="playinfo" name="playinfo"></text>
                 </div>
+                <button id="runplay" onclick="onRunPlay()">RunPlay</button>
+              </div>
+              <svg id="field" width="1000" height="500" style="border: 1px solid #777;">
+                </svg>
+              <div class="slidecontainer">
+                <input type="range" min="0" max="100" value="0" class="slider" id="myRange">
+              </div>
             </div>
         </div>
         <div id="piechartBody">

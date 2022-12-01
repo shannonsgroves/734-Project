@@ -1,3 +1,34 @@
+// Find tracking plays
+// var file_name = "tracking2018_playId_35.csv"
+var file_name = "tracking2018.csv"
+
+gamesToPlays = {};
+d3.csv("tracking2020.csv", function(dataset3) {
+    trackingData = dataset;
+    trackingData.forEach(function(value, index) {
+        var gameId = value["gameId"];
+        var playId = Number(value["playId"]);
+        if (!(gameId in gamesToPlays)) {
+            var current = [];
+            current.push(playId);
+        } else {
+            var current = gamesToPlays[gameId];
+
+            if (!(current.includes(playId))) {
+                current.push(playId);
+            }
+        }
+        gamesToPlays[gameId] = current;
+    });
+    console.log(gamesToPlays);
+    // var games = (trackingData['gameId']).filter((item, i, ar) => ar.indexOf(item) === i);
+    // update way to recieve play
+    // var playId = 35;
+    // var gameId = 2018121603;
+    // var year = 2018;
+    // currentPlay = loadPlay(year, gameId, playId);
+});
+
 function update_team() {
     var select = d3.select('#team_name').node();
     curr_state['team'] = select.options[select.selectedIndex].value;
@@ -86,6 +117,17 @@ function updateChart() {
             return d.possessionTeam == curr_state['team'];
         });
     }
+
+    var filtered_plays = filtered_plays.filter(function(d){
+        if ((d.gameId in gamesToPlays)) {
+            var current = gamesToPlays[d.gameId];
+            if ((current.includes(Number(d.playId)))) {
+                return true;
+            };
+        };
+        return false;
+    });
+
     
     filtered_plays = filtered_plays.slice(0, 100)
 
@@ -109,7 +151,17 @@ function updateChart() {
     var texts = texts.append('text')
         .attr('x', 250)
         .attr('y', function (d, i) { return i * 2 * 20 })
-        .attr('fill', 'black')
+        .attr('fill', function(d, i) {
+            // TODO make red if we want
+            var color = 'black';
+            if ((d.gameId in gamesToPlays)) {
+                var current = gamesToPlays[d.gameId];
+                if ((current.includes(Number(d.playId)))) {
+                    color = 'black';
+                };
+            };
+            return color;
+        })
         .style('pointer-events', 'auto')
         .on("click", function (d, i) {
             uploadPlayToField(d.playId, d.gameId);})
@@ -119,7 +171,6 @@ function updateChart() {
 //////////////////Field data (task 3)
 
 // tracking
-var file_name = "tracking2018_playId_35.csv"
 
 // Get layout parameters
 var svg_f = d3.select('#field');
@@ -131,6 +182,11 @@ field = svg_f.append("image")
     .attr('width', svg_fWidth)
     .attr('height', svg_fHeight);
     // .attr('transform', 'translate(0,-0)')
+
+playText = "";
+playTextBox = d3.select('#playinfo');
+playTextBox.text(playText)
+    .attr('fill', 'black');
 
 var padding = {t: 0, r: 0, b: 0, l: 0};
 // var padding = {t: 50, r: 50, b: 50, l: 50};
@@ -149,66 +205,76 @@ yScale_f = d3.scaleLinear()
 colorScale = d3.scaleOrdinal(d3['schemeDark2'])
 parseDate = d3.timeParse('%b %Y');
 
-currentTime = 0
+currentTime = 1
 
 // slider
-slider = d3.select('slider')
+slider = d3.select('slider');
 
 slider = document.getElementById("myRange");
 slider.oninput = function() {
     currentTime = this.value;
-    updateField(times[currentTime]);
+    updateField(currentTime);
     isClicked = false;
     animate();
 };
 
 isClicked = false;
-times = [];
+numFrames = -1;
 
 function onRunPlay() {
     isClicked = !isClicked;
+    console.log(playText);
     animate();
 };
 
 function animate() {
     var interval = window.setInterval(() => {
-        if (!isClicked || (currentTime >= times.length)) {
+        if (!isClicked || (currentTime >= numFrames)) {
             clearInterval(interval);
         } else {
             // TODO terminate at end of play
-            updateField(times[currentTime]);
+            updateField(currentTime);
             currentTime++;
             slider.value = currentTime;
         }
     }, 100);
 };
 
-d3.csv(file_name).then(function(dataset) {
-    trackingData = dataset;
-    // update way to recieve play
-    var playID = 35;
-    var gameID = 2018121603;
-    currentPlay = loadPlay(gameID, playID);
-});
-
-function uploadPlayToField(playID, gameID) {
-    console.log(playID + " " + gameID);
-    currentPlay = loadPlay(gameID, playID);
-    updateField(times[currentTime]);
+function uploadPlayToField(playId, gameId) {
+    var year = 2018;
+    console.log(year + " " + playId + " " + gameId);
+    currentPlay = loadPlay(year, gameId, playId);
+    updateField(currentTime);
     return currentPlay
 }
 
-function loadPlay(gameID, playID) {
-    times = [];
+function loadPlay(year, gameId, playId) {
+    numFrames = -1;
     var currentPlay = trackingData.filter(function(d){
-        return d["playId"] == playID && d["gameId"] == gameID;
+        return d["playId"] == playId && d["gameId"] == gameId;
     });
-    currentPlay.forEach(function(value, index) {
-        if (!times.includes(value["time"])) {
-            times.push(value["time"]);
-        };
-    });
-    slider.max = times.length-1;
+    // currentPlay.forEach(function(value, index) {
+    //     if (!times.includes(value["time"])) {
+    //         times.push(value["time"]);
+    //     };
+    // });
+    if (currentPlay.length > 0) {
+        numFrames = d3.max(currentPlay, function(d) {
+            return d.frameId;
+        });        
+    }
+    console.log(numFrames);
+    console.log(currentPlay);
+    playText = "";
+    if (numFrames < 0) {
+        playText = "PLAY NOT FOUND! Please select a game with red text";// todo
+    } else {
+        playText = "Game: " + gameId + " play: " + playId;
+    };
+    playTextBox.text(playText)
+
+    currentTime = 1;
+    slider.max = numFrames-1;
     return currentPlay;
 };
 
@@ -216,7 +282,7 @@ function loadPlay(gameID, playID) {
 function updateField(time) {
     // time = times[currentTime];
     var filteredPlayers = currentPlay.filter(function(d){
-        return d["time"] == time;
+        return d["frameId"] == time;
     });
 
     var playerG = svg_f.selectAll('.player')

@@ -29,6 +29,14 @@ div#container {
     float: right;
 }
 
+#top_infocontainer {
+    float: left;
+}
+
+#runplay {
+    float: right;
+}
+
 button {
     margin-left: 50px;
     margin-top: 10px
